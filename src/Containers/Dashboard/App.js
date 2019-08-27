@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import firebase from '../../Helpers/firebase';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = (props) => {
+  useEffect(() => {
+    if(!props.user){
+      props.history.push('/login');
+    }
+  },[props.user, props.history]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,9 +26,12 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={() => firebase.auth().signOut()}>
+          Logout
+        </button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default withRouter(App);
