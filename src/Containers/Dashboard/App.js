@@ -1,31 +1,34 @@
 import React, { useEffect } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import firebase from '../../Helpers/firebase';
-import logo from './logo.svg';
 import './App.css';
 
+import Clientes from '../Clientes/Clientes';
+import Productos from '../Productos/Productos';
+
 const App = (props) => {
+
   useEffect(() => {
+    console.log('corrió')
     if(!props.user){
       props.history.push('/login');
     }
   },[props.user, props.history]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='App'>
+      <header className='App-header'>
+        <nav>
+          <Link to='/clientes'>Clientes</Link>
+          <br/>
+          <Link to='/'>Productos</Link>
+        </nav>
+        <Switch>
+          <Route path="/clientes" render={() => <Clientes user={props.user} />}/>
+          <Route path="/" exact render={() => <Productos />}/>
+        </Switch>
+        
         <button onClick={() => firebase.auth().signOut()}>
           Logout
         </button>

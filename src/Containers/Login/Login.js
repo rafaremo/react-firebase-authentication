@@ -9,6 +9,11 @@ const Login = (props) => {
         password: ''
     });
 
+    const [errores, setErrores] = useState({
+        error: false,
+        mensaje: ""
+    });
+
     useEffect(() => {
         if(props.user){
             props.history.push('/');
@@ -33,10 +38,13 @@ const Login = (props) => {
 
         firebase.auth().signInWithEmailAndPassword(formulario.username, formulario.password)
             .then(respuesta => {
-                console.log(respuesta);
+                console.log("Login Exitoso");
             })
-            .catch(error => {
-                console.log(error);
+            .catch(err => {
+                setErrores({
+                    error: true,
+                    mensaje: err.message
+                })
             });
     }
 
@@ -47,6 +55,7 @@ const Login = (props) => {
                     <input type="email" placeholder="Correo" required onChange={(eve) => onFormChange('username', eve.target.value)} />
                     <input type="password" placeholder="Contraseña" required onChange={(eve) => onFormChange('password', eve.target.value)} />
                     <button type="submit">Submit</button>
+                    {errores.error && <p>{errores.mensaje}</p>}
                 </form>
             </header>
         </div>

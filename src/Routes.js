@@ -6,7 +6,7 @@ import Login from './Containers/Login/Login';
 import App from './Containers/Dashboard/App';
 
 const Routes = () => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("hola");
 
     useEffect(() => {
         const userObserver = firebase.auth().onAuthStateChanged(user => {
@@ -25,7 +25,7 @@ const Routes = () => {
     return (
         <Switch>
             <Route path="/login" render={() => <Login user={user} />}/>
-            <Route path="/" exact render={() => <App user={user} />} />
+            <Route path="/" render={() => <App user={user} />} />
         </Switch>
     )
 }
